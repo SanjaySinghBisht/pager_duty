@@ -1,0 +1,340 @@
+<html>
+
+<head>
+    <title>Pager Duty</title>
+    <link href="font-awesome.min.css" />
+    <style>
+        body {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 12px;
+            color: rgb(92, 91, 91);
+        }
+
+        .shift {
+            border: 1px solid #efefef;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px #928a8a;
+            margin: 5px;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        .morning-shift {
+            border-top: 5px solid #de6f31;
+        }
+
+        .evening-shift {
+            border-top: 5px solid rgb(235, 171, 54)
+        }
+
+        .night-shift {
+            border-top: 5px solid rgb(22, 116, 224);
+        }
+
+        .shift-section p {
+            margin: 2px 0;
+        }
+
+        .weekcol {
+            width: calc(100% / 7);
+            float: left;
+
+        }
+
+        .weekday {
+            width: calc(100% / 7);
+            float: left;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="weekdays">
+        <!-- <div class="weekday">Monday</div>
+        <div class="weekday">Tuesday</div>
+        <div class="weekday">Wednesday</div>
+        <div class="weekday">Thursday</div>
+        <div class="weekday">Friday</div>
+        <div class="weekday">Saturday</div>
+        <div class="weekday">Sunday</div> -->
+    </div>
+    <div class="pager-duty">
+        <div class="shifts morning"></div>
+        <div class="shifts evening"></div>
+        <div class="shifts night"></div>
+    </div>
+</body>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        outJSON = [{
+            "start": "2018-10-23T12:30:00+05:30",
+            "end": "2018-10-23T14:00:00+05:30",
+            "day": "Tuesday",
+            "primary": {
+                "name": "Yogita Gupta",
+                "email": "yogita.gupta@pimco.com",
+                "mobileNo": "7838133976"
+            },
+            "secondary": {
+                "name": "Abhishek Mahajan",
+                "email": "amahajan@de.pimco.com",
+                "mobileNo": "9899155735"
+            }
+        },
+        {
+            "start": "2018-10-23T14:00:00+05:30",
+            "end": "2018-10-23T21:00:00+05:30",
+            "day": "Tuesday",
+            "primary": {
+                "name": "Kashish Jindal",
+                "email": "kjindal@de.pimco.com",
+                "mobileNo": "8146675666"
+            },
+            "secondary": {
+                "name": "Aparajita Kaur",
+                "email": "aparajita.kaur@pimco.com",
+                "mobileNo": "9718097018"
+            }
+        },
+        {
+            "start": "2018-10-23T21:00:00+05:30",
+            "end": "2018-10-24T06:30:00+05:30",
+            "day": "Wednesday",
+            "primary": {
+                "name": "Shivani Puri",
+                "email": "shivani.puri@pimco.com",
+                "mobileNo": "8847338505"
+            },
+            "secondary": {
+                "name": "Himani Dhawan",
+                "email": "himani.dhawan@pimco.com",
+                "mobileNo": "8427234841"
+            }
+        },
+        {
+            "start": "2018-10-24T06:30:00+05:30",
+            "end": "2018-10-24T14:00:00+05:30",
+            "day": "Wednesday",
+            "primary": {
+                "name": "Yogita Gupta",
+                "email": "yogita.gupta@pimco.com",
+                "mobileNo": "7838133976"
+            },
+            "secondary": {
+                "name": "Abhishek Mahajan",
+                "email": "amahajan@de.pimco.com",
+                "mobileNo": "9899155735"
+            }
+        },
+        {
+            "start": "2018-10-24T14:00:00+05:30",
+            "end": "2018-10-24T21:00:00+05:30",
+            "day": "Wednesday",
+            "primary": {
+                "name": "Kashish Jindal",
+                "email": "kjindal@de.pimco.com",
+                "mobileNo": "8146675666"
+            },
+            "secondary": {
+                "name": "Aparajita Kaur",
+                "email": "aparajita.kaur@pimco.com",
+                "mobileNo": "9718097018"
+            }
+        },
+        {
+            "start": "2018-10-24T21:00:00+05:30",
+            "end": "2018-10-25T06:30:00+05:30",
+            "day": "Thursday",
+            "primary": {
+                "name": "Shivani Puri",
+                "email": "shivani.puri@pimco.com",
+                "mobileNo": "8847338505"
+            },
+            "secondary": {
+                "name": "Himani Dhawan",
+                "email": "himani.dhawan@pimco.com",
+                "mobileNo": "8427234841"
+            }
+        },
+        {
+            "start": "2018-10-25T06:30:00+05:30",
+            "end": "2018-10-25T14:00:00+05:30",
+            "day": "Thursday",
+            "primary": {
+                "name": "Yogita Gupta",
+                "email": "yogita.gupta@pimco.com",
+                "mobileNo": "7838133976"
+            },
+            "secondary": {
+                "name": "Abhishek Mahajan",
+                "email": "amahajan@de.pimco.com",
+                "mobileNo": "9899155735"
+            }
+        },
+        {
+            "start": "2018-10-25T14:00:00+05:30",
+            "end": "2018-10-25T21:00:00+05:30",
+            "day": "Thursday",
+            "primary": {
+                "name": "Kashish Jindal",
+                "email": "kjindal@de.pimco.com",
+                "mobileNo": "8146675666"
+            },
+            "secondary": {
+                "name": "Aparajita Kaur",
+                "email": "aparajita.kaur@pimco.com",
+                "mobileNo": "9718097018"
+            }
+        },
+        {
+            "start": "2018-10-25T21:00:00+05:30",
+            "end": "2018-10-26T06:30:00+05:30",
+            "day": "Friday",
+            "primary": {
+                "name": "Shivani Puri",
+                "email": "shivani.puri@pimco.com",
+                "mobileNo": "8847338505"
+            },
+            "secondary": {
+                "name": "Himani Dhawan",
+                "email": "himani.dhawan@pimco.com",
+                "mobileNo": "8427234841"
+            }
+        },
+        {
+            "start": "2018-10-26T06:30:00+05:30",
+            "end": "2018-10-26T14:00:00+05:30",
+            "day": "Friday",
+            "primary": {
+                "name": "Yogita Gupta",
+                "email": "yogita.gupta@pimco.com",
+                "mobileNo": "7838133976"
+            },
+            "secondary": {
+                "name": "Abhishek Mahajan",
+                "email": "amahajan@de.pimco.com",
+                "mobileNo": "9899155735"
+            }
+        },
+        {
+            "start": "2018-10-26T14:00:00+05:30",
+            "end": "2018-10-26T21:00:00+05:30",
+            "day": "Friday",
+            "primary": {
+                "name": "Kashish Jindal",
+                "email": "kjindal@de.pimco.com",
+                "mobileNo": "8146675666"
+            },
+            "secondary": {
+                "name": "Aparajita Kaur",
+                "email": "aparajita.kaur@pimco.com",
+                "mobileNo": "9718097018"
+            }
+        },
+        {
+            "start": "2018-10-27T21:00:00+05:30",
+            "end": "2018-10-27T06:30:00+05:30",
+            "day": "Saturday",
+            "primary": {
+                "name": "Shivani Puri",
+                "email": "shivani.puri@pimco.com",
+                "mobileNo": "8847338505"
+            },
+            "secondary": {
+                "name": "Himani Dhawan",
+                "email": "himani.dhawan@pimco.com",
+                "mobileNo": "8427234841"
+            }
+        },
+        {
+            "start": "2018-10-28T21:00:00+05:30",
+            "end": "2018-10-28T06:30:00+05:30",
+            "day": "Sunday",
+            "primary": {
+                "name": "Shivani Puri",
+                "email": "shivani.puri@pimco.com",
+                "mobileNo": "8847338505"
+            },
+            "secondary": {
+                "name": "Himani Dhawan",
+                "email": "himani.dhawan@pimco.com",
+                "mobileNo": "8427234841"
+            }
+        }
+            ,
+        {
+            "start": "2018-10-22T21:00:00+05:30",
+            "end": "2018-10-22T06:30:00+05:30",
+            "day": "Monday",
+            "primary": {
+                "name": "Shivani Puri",
+                "email": "shivani.puri@pimco.com",
+                "mobileNo": "8847338505"
+            },
+            "secondary": {
+                "name": "Himani Dhawan",
+                "email": "himani.dhawan@pimco.com",
+                "mobileNo": "8427234841"
+            }
+        }]
+        var groupBy = function (xs, key) {
+            return xs.reduce(function (rv, x) {
+                (rv[x[key]] = rv[x[key]] || []).push(x);
+                return rv;
+            }, {});
+        };
+
+        var sortedDays = groupBy(outJSON, 'day');
+        console.log(sortedDays);
+        var weekday = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        let div = $(".pager-duty");
+        let days = $(".weekdays");
+        var html = "";
+        var weekcol = "";
+        var morning = "";
+        var evening = "";
+        var night = "";
+        var weekdays = "";
+        var getshiftDetails = function (sortedDays) {
+            for (var j = 0; j < weekday.length; j++) {
+                var day = weekday[j];
+                var dateOrder1 = sortedDays[day][0].end;
+                var date1 = new Date(dateOrder1);
+                var shift1 = date1.toTimeString();
+                var shiftTime1 = shift1.split("G")[0];
+                var dd = date1.getDate();
+                var mm = date1.getMonth() + 1;
+                var yyyy = date1.getFullYear();
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+                var today1 = dd + '-' + mm + '-' + yyyy;
+                weekdays += "<div class='weekday'>" + weekday[j] + " (" + today1 + ")</div>"
+                weekcol = "<div class='weekcol'>"
+                for(var k=0;k< sortedDays[day].length;k++){
+                    debugger;
+                    var shiftcol = "<div class='shift-section'>"
+                    var dateOrder = sortedDays[day][k].start;
+                    var date = new Date(dateOrder);
+                    var shift = date.toTimeString();
+                    var shiftTime = shift.split(" ")[0];
+                    if (shiftTime == "06:30:00") {
+                        shiftcol += "<div class='shift morning-shift'><p>" + sortedDays[day][k].primary.name + "</p><p>" + sortedDays[day][k].primary.mobileNo + "</p><p>" + sortedDays[day][k].primary.email + "</p><hr/><p>" + sortedDays[day][k].secondary.name + "</p><p>" + sortedDays[day][k].secondary.mobileNo + "</p><p>" + sortedDays[day][k].secondary.email + "</p></div>";
+                    }
+                } 
+                weekcol += "</div>"
+                html += weekcol;
+            }
+            div.append(html)
+            days.append(weekdays)
+        };
+        var obj = getshiftDetails(sortedDays);
+    })
+</script>
+
+</html>

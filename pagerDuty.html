@@ -1,0 +1,504 @@
+<html>
+
+<head>
+    <title>Pager Duty</title>
+    <link href="font-awesome.min.css" />
+    <style>
+        body {
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            font-size: 12px;
+            color: rgb(92, 91, 91);
+        }
+
+        .shift {
+            border: 1px solid #efefef;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px #928a8a;
+            margin: 5px 10px 15px 10px;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        .weekcol,
+        .weekdays>div {
+            width: calc(100% / 7);
+            float: left;
+        }
+
+        .weekdays>div p {
+            margin: 2px 10px;
+            color: rgb(31, 30, 30)
+        }
+
+        .weekcol .shift p {
+            margin: 4px 0;
+        }
+
+        .weekcol .shift p.user {
+            color: rgb(31, 30, 30)
+        }
+
+        .shift:nth-child(1) {
+            border-top: 5px solid rgb(245, 110, 61);
+        }
+
+        .shift:nth-child(2) {
+            border-top: 5px solid rgb(236, 223, 43);
+        }
+
+        .shift:nth-child(3) {
+            border-top: 5px solid rgb(36, 101, 221);
+        }
+
+        .legends {
+            width: 100%;
+            float: left;
+            border-top: 1px solid #bbb9b9;
+        }
+
+        .legends ul {
+            padding: 0;
+        }
+
+        .legends ul li {
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        .legends ul li span {
+            padding: 2px 8px;
+            margin-right: 6px;
+        }
+
+        .legends ul li.morning-shift span {
+            background: rgb(245, 110, 61);
+        }
+
+        .legends ul li.evening-shift span {
+            background: rgb(236, 223, 43);
+        }
+
+        .legends ul li.night-shift span {
+            background: rgb(36, 101, 221);
+        }
+
+        .pager-duty-container .left-section {
+            width: 10%;
+            float: left;
+        }
+
+        .pager-duty-container .left-section p {
+            padding: 68px 0;
+            margin-bottom: 15px;
+            margin-top: 5px;
+        }
+
+        .pager-duty-container .right-section {
+            width: 90%;
+            float: left;
+        }
+
+        .pager-duty-container .right-section>div {
+            width: 100%;
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="pager-duty-container">
+        <div class="left-section">
+            <span style="color:rgb(31, 30, 30)">Shift Timings</span>
+        </div>
+        <div class="right-section">
+            <div class="weekdays"></div>
+            <div class="pager-duty"> </div>
+        </div>
+        <div class="legends">
+            <ul>
+                <li class="morning-shift">
+                    <span class="box"></span>Morning Shift</li>
+                <li class="evening-shift">
+                    <span class="box"></span>Evening Shift</li>
+                <li class="night-shift">
+                    <span class="box"></span>Night Shift</li>
+            </ul>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        data = {
+            "pagerDutyStartDate": "22-Oct-2018",
+            "pagerDutyEndDate": "28-Oct-2018",
+            "WeekDetails": [
+                {
+                    "day": "Monday",
+                    "date": "22-Oct-2018",
+                    "shifts": [
+                        {
+                            "primary": {
+                                "name": "Yogita Gupta",
+                                "email": "yogita.gupta@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Abhishek Mahajan",
+                                "email": "amahajan@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "18:00",
+                            "endTime": "01:30",
+                        },
+                        {
+                            "primary": {
+                                "name": "Sanjay Gupta",
+                                "email": "sanjay.gupta@pimco.com",
+                                "mobileNo": "3453434343"
+                            },
+                            "Secondary": {
+                                "name": "Kiran Mahajan",
+                                "email": "kiran@de.pimco.com",
+                                "mobileNo": "635453454"
+                            },
+                            "startTime": "01:30",
+                            "endTime": "08:30",
+                        },
+                        {
+                            "primary": {
+                                "name": "Vandana Gupta",
+                                "email": "vandana.gupta@pimco.com",
+                                "mobileNo": "34324324234"
+                            },
+                            "Secondary": {
+                                "name": "Kriti Mahajan",
+                                "email": "kriti@de.pimco.com",
+                                "mobileNo": "42343246"
+                            },
+                            "startTime": "8:30",
+                            "endTime": "18:00",
+                        }
+                    ]
+                },
+                {
+                    "day": "Tuesday",
+                    "date": "23-Oct-2018",
+                    "shifts": [
+                        {
+                            "primary": {
+                                "name": "pawan Gupta",
+                                "email": "pawan.gupta@pimco.com",
+                                "mobileNo": "988997875"
+                            },
+                            "Secondary": {
+                                "name": "geetika Mahajan",
+                                "email": "geetika@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "18:00",
+                            "endTime": "01:30",
+                        },
+                        {
+                            "primary": {
+                                "name": "Sanjay Singh ",
+                                "email": "sanjay.singh@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Kiran gupta",
+                                "email": "kiran@gupta.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "01:30",
+                            "endTime": "08:30",
+                        },
+                        {
+                            "primary": {
+                                "name": "Yogita Sharma",
+                                "email": "yogita.sharma@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Abhishek Kappor",
+                                "email": "amahajan@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "8:30",
+                            "endTime": "18:00",
+                        }
+                    ]
+                },
+                {
+                    "day": "Wednesday",
+                    "date": "24-Oct-2018",
+                    "shifts": [
+                        {
+                            "primary": {
+                                "name": "Yogita Gupta",
+                                "email": "yogita.gupta@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Abhishek Mahajan",
+                                "email": "amahajan@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "18:00",
+                            "endTime": "01:30",
+                        },
+                        {
+                            "primary": {
+                                "name": "Sanjay Gupta",
+                                "email": "sanjay.gupta@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Kiran Mahajan",
+                                "email": "kiran@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "01:30",
+                            "endTime": "08:30",
+                        },
+                        {
+                            "primary": {
+                                "name": "Yogita Gupta",
+                                "email": "yogita.gupta@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Abhishek Mahajan",
+                                "email": "amahajan@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "8:30",
+                            "endTime": "18:00",
+                        }
+                    ]
+                },
+                {
+                    "day": "Thursday",
+                    "date": "25-Oct-2018",
+                    "shifts": [
+                        {
+                            "primary": {
+                                "name": "Yogita Gupta",
+                                "email": "yogita.gupta@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Abhishek Mahajan",
+                                "email": "amahajan@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "18:00",
+                            "endTime": "01:30",
+                        },
+                        {
+                            "primary": {
+                                "name": "Sanjay Gupta",
+                                "email": "sanjay.gupta@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Kiran Mahajan",
+                                "email": "kiran@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "01:30",
+                            "endTime": "08:30",
+                        },
+                        {
+                            "primary": {
+                                "name": "Yogita Gupta",
+                                "email": "yogita.gupta@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Abhishek Mahajan",
+                                "email": "amahajan@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "8:30",
+                            "endTime": "18:00",
+                        }
+                    ]
+                },
+                {
+                    "day": "Friday",
+                    "date": "26-Oct-2018",
+                    "shifts": [
+                        {
+                            "primary": {
+                                "name": "Yogita Gupta",
+                                "email": "yogita.gupta@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Abhishek Mahajan",
+                                "email": "amahajan@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "18:00",
+                            "endTime": "01:30",
+                        },
+                        {
+                            "primary": {
+                                "name": "Sanjay Gupta",
+                                "email": "sanjay.gupta@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Kiran Mahajan",
+                                "email": "kiran@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "01:30",
+                            "endTime": "08:30",
+                        },
+                        {
+                            "primary": {
+                                "name": "Yogita Gupta",
+                                "email": "yogita.gupta@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Abhishek Mahajan",
+                                "email": "amahajan@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "8:30",
+                            "endTime": "18:00",
+                        }
+                    ]
+                },
+                {
+                    "day": "Saturday",
+                    "date": "22-Oct-2018",
+                    "shifts": [
+                        {
+                            "primary": {
+                                "name": "Yogita Gupta",
+                                "email": "yogita.gupta@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Abhishek Mahajan",
+                                "email": "amahajan@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "18:00",
+                            "endTime": "01:30",
+                        },
+                        {
+                            "primary": {
+                                "name": "Sanjay Gupta",
+                                "email": "sanjay.gupta@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Kiran Mahajan",
+                                "email": "kiran@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "01:30",
+                            "endTime": "08:30",
+                        },
+                        {
+                            "primary": {
+                                "name": "Yogita Gupta",
+                                "email": "yogita.gupta@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Abhishek Mahajan",
+                                "email": "amahajan@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "8:30",
+                            "endTime": "18:00",
+                        }
+                    ]
+                },
+                {
+                    "day": "Sunday",
+                    "date": "28-Oct-2018",
+                    "shifts": [
+                        {
+                            "primary": {
+                                "name": "Yogita Gupta",
+                                "email": "yogita.gupta@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Abhishek Mahajan",
+                                "email": "amahajan@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "18:00",
+                            "endTime": "01:30",
+                        },
+                        {
+                            "primary": {
+                                "name": "Sanjay Gupta",
+                                "email": "sanjay.gupta@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Kiran Mahajan",
+                                "email": "kiran@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "01:30",
+                            "endTime": "08:30",
+                        },
+                        {
+                            "primary": {
+                                "name": "Yogita Gupta",
+                                "email": "yogita.gupta@pimco.com",
+                                "mobileNo": "7838133976"
+                            },
+                            "Secondary": {
+                                "name": "Abhishek Mahajan",
+                                "email": "amahajan@de.pimco.com",
+                                "mobileNo": "9899155735"
+                            },
+                            "startTime": "8:30",
+                            "endTime": "18:00",
+                        }
+                    ]
+                }
+            ]
+        }
+        var html = "";
+        var weekcol = "";
+        var shift = "";
+        var shift_time = "";
+        var weekdays = "";
+        let div = $(".pager-duty");
+        let week = $(".weekdays");
+        let timimgs = $(".left-section");
+
+        console.log(data)
+        for (var k = 0; k < data.WeekDetails.length; k++) {
+            weekdays += "<div><p>" + data.WeekDetails[k].day + "</p></div>"
+            weekcol = "<div class='weekcol'>"
+            for (var i = 0; i < data.WeekDetails[k].shifts.length; i++) {
+                shift = "<div class='shift'>"
+                shift += "<p class='user'>" + data.WeekDetails[k].shifts[i].primary.name + "</p><p> <i class='fa fa-phone' aria-hidden='true'></i>" + data.WeekDetails[k].shifts[i].primary.mobileNo + "</p><p>" + data.WeekDetails[k].shifts[i].primary.email + "</p><hr/><p class='user'>" + data.WeekDetails[k].shifts[i].Secondary.name + "</p><p>" + data.WeekDetails[k].shifts[i].Secondary.mobileNo + "</p><p>" + data.WeekDetails[k].shifts[i].Secondary.email + "</p>"
+                shift += "</div>"
+                weekcol += shift;
+            }
+            // timimgs+=shift_time;
+            weekcol += "</div>";
+            html += weekcol;
+        }
+        shift_time += "<p><span>" + data.WeekDetails[0].shifts[0].startTime + "</span>-<span>" + data.WeekDetails[0].shifts[0].endTime + "</span></p><p><span>" + data.WeekDetails[0].shifts[1].startTime + "</span>-<span>" + data.WeekDetails[0].shifts[1].endTime + "</span></p><p><span>" + data.WeekDetails[0].shifts[2].startTime + "</span>-<span>" + data.WeekDetails[0].shifts[2].endTime + "</span></p>"
+        timimgs.append(shift_time);
+        week.append(weekdays);
+        div.append(html)
+    })
+</script>
+
+</html>
